@@ -1,0 +1,13 @@
+
+services:
+  postgres:
+    image: postgres:14.5
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: "library_manager"
+      POSTGRES_DB: "DigitalLibrary"
+      POSTGRES_PASSWORD: "2DetyDashaMilan"
+#      PGDATA: "./pg_data/var/lib/postgresql/data/pgdata"
+#    volumes:
+#      - ./pg_data:/var/lib/postgresql/data
