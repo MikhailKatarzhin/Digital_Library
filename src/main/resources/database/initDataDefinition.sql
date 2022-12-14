@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS public."User"
     id bigserial NOT NULL,
     nickname character varying(25) COLLATE pg_catalog."default" NOT NULL,
     email character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    status_id bigint NOT NULL DEFAULT 0,
+    status_id bigint NOT NULL DEFAULT 1,
     password character varying(30) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT "PK_User_Id" PRIMARY KEY (id),
     CONSTRAINT "UQ_User_Email" UNIQUE (email),
