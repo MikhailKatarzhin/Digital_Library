@@ -59,11 +59,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(encoder())
-                .usersByUsernameQuery("select username, password, 'true' from user where username=?")
+                .usersByUsernameQuery("select nickname, password, 'true' from public.\"User\" where nickname=$1")
                 .authoritiesByUsernameQuery("\n" +
-                        "select u.nickname, r.name from user u" +
-                        " inner join user_role_set ur on u.id = ur.user_id" +
-                        " inner join role r on ur.role_set_id = r.id" +
-                        " where u.nickname=$");
+                        "select u.nickname, r.name from public.\"User\" u" +
+                        " inner join public.\"User_Role\" ur on u.id = ur.user_id" +
+                        " inner join public.\"Role_of_User\" r on ur.role_set_id = r.id" +
+                        " where u.nickname=$1");
     }
 }
