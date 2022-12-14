@@ -33,6 +33,18 @@ CREATE TABLE IF NOT EXISTS public."User"
     CONSTRAINT "CK_User_Password_strength" CHECK (password::text ~ '^[A-Za-z0-9#&%-\._]{8,30}$'::text)
     );
 
+CREATE TABLE public."Wallet"
+(
+    id bigint NOT NULL,
+    balance bigint NOT NULL DEFAULT 0,
+    CONSTRAINT "PK_Wallet_Id" PRIMARY KEY (id),
+    CONSTRAINT "FK_Wallet_belongs_User" FOREIGN KEY (id)
+    REFERENCES public."User" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT "CH_Wallet_Balance_not_negative" CHECK (balance >= 0)
+);
+
 CREATE TABLE IF NOT EXISTS public."User_Role"
 (
     id bigserial NOT NULL,
