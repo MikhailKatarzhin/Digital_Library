@@ -42,11 +42,9 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> consumers = new LinkedHashSet<>();
 
-    public Set<User> getConsumers() {
-        return consumers;
-    }
+    @Column(name = "year_of_creation")
+    private Short yearOfCreation;
 
-    public void setConsumers(Set<User> consumers) {
-        this.consumers = consumers;
-    }
+    @Column(name = "year_of_upload")
+    private Short yearOfUpload;
 }
