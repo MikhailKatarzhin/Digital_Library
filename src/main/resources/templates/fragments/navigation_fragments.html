@@ -13,10 +13,10 @@
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                         <li class="nav-item" sec:authorize="hasAuthority('READER')">
-                            <a class="nav-link active" aria-current="page" th:href="@{/contract}">Contract management</a>
+                            <a class="nav-link active" aria-current="page" th:href="@{/reader/library}">My books</a>
                         </li>
                         <li class="nav-item" sec:authorize="hasAuthority('AUTHOR')">
-                            <a class="nav-link active" aria-current="page" th:href="@{/tariff}">Tariff management</a>
+                            <a class="nav-link active" aria-current="page" th:href="@{/author/works}">My works</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -46,11 +46,11 @@
                                 Administration
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                <li><form th:action="@{/address}">
-                                    <button type="submit" class="dropdown-item">Address management</button>
+                                <li><form th:action="@{/TO_DO}">
+                                    <button type="submit" class="dropdown-item">TO DO</button>
                                 </form></li>
-                                <li><form th:action="@{/transmitter}">
-                                    <button type="submit" class="dropdown-item">Transmitter management</button>
+                                <li><form th:action="@{/TO_DO}">
+                                    <button type="submit" class="dropdown-item">TO DO</button>
                                 </form></li>
                             </ul>
                         </li>
