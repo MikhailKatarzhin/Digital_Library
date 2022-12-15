@@ -39,9 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .hasAnyAuthority("READER")
                     .antMatchers("/author/**")
                         .hasAnyAuthority("AUTHOR")
+                    .antMatchers("/sign_in", "/sign_up")
+                        .anonymous()
                     .antMatchers("/profile/**")
-                        .fullyAuthenticated()
-                    .antMatchers("/", "/webjars/**", "/css/**", "/home", "/sign_up")
+                        .authenticated()
+                    .antMatchers("/", "/webjars/**", "/css/**", "/home")
                         .permitAll()
                     .anyRequest().authenticated()
                 .and()
@@ -59,11 +61,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(encoder())
-                .usersByUsernameQuery("select nickname, password, 'true' from public.\"User\" where nickname=$1")
+                .usersByUsernameQuery("select username, password, 'true' from \"User\" where username=?")
                 .authoritiesByUsernameQuery("\n" +
-                        "select u.nickname, r.name from public.\"User\" u" +
-                        " inner join public.\"User_Role\" ur on u.id = ur.user_id" +
-                        " inner join public.\"Role_of_User\" r on ur.role_set_id = r.id" +
-                        " where u.nickname=$1");
+                        "select u.username, r.name from \"User\" u" +
+                        " inner join \"User_Role\" ur on u.id = ur.user_id" +
+                        " inner join \"Role_of_User\" r on ur.role_id = r.id" +
+                        " where u.username=?");
     }
 }
