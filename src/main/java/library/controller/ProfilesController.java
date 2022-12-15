@@ -60,6 +60,12 @@ public class ProfilesController {
         return "profile/change_password";
     }
 
+    @GetMapping("/grant_role_author")
+    public String grantRoleAuthor() {
+        userService.grantRoleAuthor();
+        return "redirect:/profile";
+    }
+
     @PostMapping("/change_password")
     public String changePassword(
             @RequestParam("newPassword") String newPassword

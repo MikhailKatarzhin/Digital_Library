@@ -67,4 +67,10 @@ public class User implements UserDetails {
         return true;
     }
 
+    public boolean hasRole(String roleName){
+        for (RoleOfUser role : roleSet)
+            if (role.getName().equals(roleName))
+                return true;
+        return false;
+    }
 }

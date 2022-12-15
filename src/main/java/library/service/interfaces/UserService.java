@@ -27,4 +27,6 @@ public interface UserService {
     User saveEmail(String email);
 
     User savePassword(String password);
+
+    User grantRoleAuthor();
 }

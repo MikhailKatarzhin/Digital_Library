@@ -6,6 +6,7 @@ import library.model.User;
 import library.model.Wallet;
 import library.repository.UserRepository;
 import library.repository.WalletRepository;
+import library.service.interfaces.RoleOfUserService;
 import library.service.interfaces.UserService;
 import library.service.interfaces.UserStatusService;
 import org.slf4j.Logger;
@@ -25,16 +26,18 @@ public class UserServiceImp implements UserService {
 
     private final BCryptPasswordEncoder passwordEncoder;
     private final HttpServletRequest httpServletRequest;
+    private final RoleOfUserService roleOfUserService;
     private final UserRepository userRepository;
     private final UserStatusService userStatusService;
     private final WalletRepository walletRepository;
 
     public UserServiceImp(BCryptPasswordEncoder passwordEncoder, HttpServletRequest httpServletRequest,
-                          UserRepository userRepository, UserStatusService userStatusService,
+                          RoleOfUserService roleOfUserService, UserRepository userRepository, UserStatusService userStatusService,
                           WalletRepository walletRepository
     ) {
         this.passwordEncoder = passwordEncoder;
         this.httpServletRequest = httpServletRequest;
+        this.roleOfUserService = roleOfUserService;
         this.userRepository = userRepository;
         this.userStatusService = userStatusService;
         this.walletRepository = walletRepository;
@@ -83,6 +86,17 @@ public class UserServiceImp implements UserService {
         return user;
     }
 
+    public User grantRoleAuthor(){
+        User user = getRemoteUser();
+        if (1 == userRepository.countUserRoleByRoleNameAndUserId("AUTHOR", user.getId()))
+            return user;
+        Set<RoleOfUser> roleOfUsers = user.getRoleSet();
+        roleOfUsers.add(roleOfUserService.findByName("AUTHOR"));
+        user.setRoleSet(roleOfUsers);
+        userRepository.save(user);
+        return user;
+    }
+
     public boolean emailExists(String email) {
         return userRepository.countByEmail(email) != 0;
     }
@@ -101,7 +115,7 @@ public class UserServiceImp implements UserService {
         User user = getRemoteUser();
         user.setPassword(WebSecurityConfig.encoder().encode(password));
         user = userRepository.save(user);
-        logger.info("User {}[id:{}] change password to {}", user.getUsername(), user.getId(), password);
+        logger.info("User {}[id:{}] change password to {}", user.getUsername(), user.getId(), user.getPassword());
         return user;
     }
 }

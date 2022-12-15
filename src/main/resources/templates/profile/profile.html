@@ -41,6 +41,9 @@
             <td><form th:action="@{/wallet/replenishment}" method="get">
                 <input type="submit" value="Replenishment balance" class="w-100 btn btn-sm btn-dark">
             </form></td>
+            <td><form th:if="${!user.hasRole('AUTHOR')}" th:action="@{/profile/grant_role_author}" method="get">
+                <input type="submit" value="Request role 'AUTHOR'" class="w-100 btn btn-sm btn-secondary">
+            </form></td>
         </tr>
     </table>
 <script type="text/javascript"
