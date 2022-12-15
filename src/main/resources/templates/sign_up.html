@@ -16,7 +16,7 @@
     <div class="mt-1 mb-1 text-muted" th:if="${param.logout}">You have been logged out.</div>
     <div class="form-floating">
         <input type="text" th:class="'form-control'+(${usernameExistsError!=null}?' is-invalid':'')"
-               id="floatingInput" name="username" placeholder="Username" required maxlength="25">
+               id="floatingInput" name="username" placeholder="Username" required maxlength="25" minlength="4">
         <label for="floatingInput" th:text="${usernameExistsError==null}?'Username':${usernameExistsError}"></label>
     </div>
     <div class="form-floating">
