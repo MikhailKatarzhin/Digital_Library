@@ -91,9 +91,11 @@ public class UserServiceImp implements UserService {
         if (1 == userRepository.countUserRoleByRoleNameAndUserId("AUTHOR", user.getId()))
             return user;
         Set<RoleOfUser> roleOfUsers = user.getRoleSet();
-        roleOfUsers.add(roleOfUserService.findByName("AUTHOR"));
+        RoleOfUser roleOfUser = roleOfUserService.findByName("AUTHOR");
+        roleOfUsers.add(roleOfUser);
         user.setRoleSet(roleOfUsers);
         userRepository.save(user);
+        logger.info("Granted role '{}'[id:{}] to user [id:{}]",roleOfUser.getName(), roleOfUser.getId(), user.getId());
         return user;
     }
 
