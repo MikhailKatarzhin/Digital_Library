@@ -183,3 +183,18 @@ CREATE TABLE IF NOT EXISTS "Book_Tag"
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     );
+
+CREATE TABLE IF NOT EXISTS "User_Book"
+(
+    user_id bigint NOT NULL,
+    book_id bigint NOT NULL,
+    CONSTRAINT "PK_User_Book" PRIMARY KEY (book_id, user_id),
+    CONSTRAINT "FK_Book_belongs_to_User" FOREIGN KEY (user_id)
+        REFERENCES "User" (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_User_has_Book" FOREIGN KEY (book_id)
+        REFERENCES "Book" (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
