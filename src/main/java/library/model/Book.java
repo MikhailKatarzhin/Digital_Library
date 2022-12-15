@@ -47,4 +47,15 @@ public class Book {
 
     @Column(name = "year_of_upload")
     private Short yearOfUpload;
+
+    @Column(name = "cost", nullable = false)
+    private Long cost;
+
+    public Long getCost() {
+        return cost;
+    }
+
+    public void setCost(Long cost) {
+        this.cost = cost;
+    }
 }

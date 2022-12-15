@@ -107,6 +107,7 @@ CREATE TABLE IF NOT EXISTS "Book"
     creator_id bigint NOT NULL,
     name character varying(100) COLLATE pg_catalog."default" NOT NULL,
     book_status_id bigint NOT NULL DEFAULT 0,
+    cost bigint NOT NULL default 0,
     year_of_creation smallint,
     year_of_upload smallint,
     CONSTRAINT "PK_Book_Id" PRIMARY KEY (id),
@@ -124,6 +125,7 @@ CREATE TABLE IF NOT EXISTS "Book"
     ON DELETE NO ACTION,
     CONSTRAINT "CH_Book_Year_of_creation" CHECK ("Book".year_of_creation >= -10000 AND "Book".year_of_creation <= 2100),
     CONSTRAINT "CH_Book_Year_of_upload" CHECK ("Book".year_of_upload >= -10000 AND "Book".year_of_upload <= 2100),
+    CONSTRAINT "CH_Cost" CHECK ("Book".cost >= 0 AND "Book".year_of_upload < 10000),
     CONSTRAINT "CK_Book_Name" CHECK (name::text ~ '^[A-Za-z0-9 А-Яа-я[:punct:]]{1,100}$'::text)
     );
 
