@@ -1,7 +1,6 @@
 package library.controller;
 
 import library.model.User;
-import library.model.Wallet;
 import library.service.interfaces.RoleOfUserService;
 import library.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -42,6 +42,21 @@ public class User implements UserDetails {
     )
     private Set<RoleOfUser> roleSet = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "creator")
+    private Set<BookCycle> bookCycles = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "creator")
+    private Set<Chapter> chapters = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "creator")
+    private Set<Book> books = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "creator")
+    private Set<Universe> universes = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "creator")
+    private Set<Section> sections = new LinkedHashSet<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoleSet();
