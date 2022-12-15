@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Change email</title>
+    <link rel="stylesheet" type="text/css"
+          href="/webjars/bootstrap/5.1.1/css/bootstrap.min.css" />
+</head>
+<body>
+<div th:insert="~{fragments/navigation_fragments  :: navbar}"></div>
+<div>
+    <form th:action="@{/profile/change_email}" method="post" class="m-auto col-3 text-center">
+        <h1 class="h3 mb-3 fw-normal">Change your email address</h1>
+
+        <h5 th:text="'Current email address: '+${currentEmail}"></h5>
+        <div class="form-floating">
+            <input type="text" class="form-control" th:value="${currentEmail}" maxlength="50"
+                   id="newEmail" name="email" placeholder="New email address" required>
+            <label for="newEmail" th:text="'New email address'"></label>
+        </div>
+        <div th:if="${emailExistsError}" th:text="${emailExistsError}"></div>
+        <button class="w-100 btn btn-lg btn-dark" type="submit">Confirm change</button>
+    </form>
+</div>
+<script type="text/javascript"
+        src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript"
+        src="/webjars/bootstrap/5.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>

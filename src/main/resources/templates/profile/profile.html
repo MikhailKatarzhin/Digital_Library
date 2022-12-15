@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" type="text/css"
+          href="/webjars/bootstrap/5.1.1/css/bootstrap.min.css" />
+</head>
+<body>
+<div th:insert="~{fragments/navigation_fragments  :: navbar}"></div>
+    <h1 th:text="'Profile of ' + ${user.getUsername()}"></h1>
+    <table class="table table-striped table-sm table-responsive">
+        <tr>
+            <th scope="col">Roles</th>
+            <th scope="col">Email address</th>
+            <th scope="col">Balance:</th>
+            <th scope="col">Username</th>
+        </tr>
+
+        <tr>
+            <td><div th:each="role : ${user.getRoleSet()}">
+                <span th:text="${role.name}"></span>
+            </div></td>
+
+            <td th:text="${user.email}"></td>
+
+            <td th:text="${balance}"></td>
+
+            <td>
+                <div><span th:text="${user.username}"></span></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td><form th:action="@{/profile/change_password}" method="get">
+                <input type="submit" value="Change password" class="w-100 btn btn-sm btn-dark">
+            </form></td>
+            <td><form th:action="@{/profile/change_email}" method="get">
+                <input type="submit" value="Change email" class="w-100 btn btn-sm btn-dark">
+            </form></td>
+            <td><form th:action="@{/wallet/replenishment}" method="get">
+                <input type="submit" value="Replenishment balance" class="w-100 btn btn-sm btn-dark">
+            </form></td>
+        </tr>
+    </table>
+<script type="text/javascript"
+        src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript"
+        src="/webjars/bootstrap/5.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>

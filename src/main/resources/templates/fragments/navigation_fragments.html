@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+    <div th:fragment="navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" th:href="@{/}">Home page</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                        <li class="nav-item" sec:authorize="hasAuthority('READER')">
+                            <a class="nav-link active" aria-current="page" th:href="@{/contract}">Contract management</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasAuthority('AUTHOR')">
+                            <a class="nav-link active" aria-current="page" th:href="@{/tariff}">Tariff management</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Profile
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown" sec:authorize="isAuthenticated()">
+                                <li><form th:action="@{/profile}">
+                                    <button type="submit" class="dropdown-item"
+                                            th:text="'Profile of '+${#httpServletRequest.remoteUser}">
+                                    </button></form></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><form th:action="@{/logout}" th:method="post">
+                                    <button type="submit" class="dropdown-item">Sign out</button>
+                                </form></li>
+                            </ul>
+                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown" sec:authorize="isAnonymous()">
+                                <li><form th:action="@{/sign_in}">
+                                    <button type="submit" class="dropdown-item">Sign in</button>
+                                </form></li>
+                                <li><form th:action="@{/sign_up}">
+                                    <button type="submit" class="dropdown-item">Sign up</button>
+                                </form></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown" sec:authorize="hasAuthority('ADMINISTRATOR')">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Administration
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                <li><form th:action="@{/address}">
+                                    <button type="submit" class="dropdown-item">Address management</button>
+                                </form></li>
+                                <li><form th:action="@{/transmitter}">
+                                    <button type="submit" class="dropdown-item">Transmitter management</button>
+                                </form></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div th:fragment="paging (prefix, currentPage, nPage)"><form th:action="@{/__${prefix}__/to_page/}">
+        <hr>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item" th:if="${currentPage > 1}">
+                    <a class="page-link" th:href="@{/__${prefix}__/first_page}"
+                    >First page</a>
+                </li>
+                <li class="page-item" th:if="${currentPage > 2}">
+                    <a class="page-link" th:href="@{/__${prefix}__/list/__${currentPage}__/preview_page}"
+                    >Previous page</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link">To page: </a>
+                </li>
+                <li class="page-item">
+                    <input type="number" name="toPage" id="toPage" min="1" th:max="${nPage}" th:value="${currentPage}"
+                    class="form-control me-2" onchange="this.form.submit()">
+                </li>
+                <li class="page-item" th:if="${currentPage < (nPage - 1)}">
+                    <a class="page-link" th:href="@{/__${prefix}__/list/__${currentPage}__/next_page}"
+                    >Next page</a>
+                </li>
+                <li class="page-item" th:if="${currentPage < nPage}">
+                    <a class="page-link" th:href="@{/__${prefix}__/last_page}"
+                    >Last page</a>
+                </li>
+            </ul>
+        </nav>
+        <hr>
+    </form></div>
+</body>
+</html>
