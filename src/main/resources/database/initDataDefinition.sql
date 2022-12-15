@@ -165,6 +165,7 @@ CREATE TABLE IF NOT EXISTS "Tag"
     id bigserial NOT NULL,
     name character varying(64) NOT NULL,
     CONSTRAINT "PK_Tag_Id" PRIMARY KEY (id),
+    CONSTRAINT "UQ_Tag_Name" UNIQUE (name),
     CONSTRAINT "CK_Tag_Name" CHECK (name::text ~ '^[A-Za-zА-Яа-я]{1,64}$'::text)
     );
 
