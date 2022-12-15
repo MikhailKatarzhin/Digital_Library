@@ -28,7 +28,7 @@ public class Book {
     private BookStatus bookStatus;
 
     @ManyToMany
-    @JoinTable(name = "Book_Tag",
+    @JoinTable(name = "\"Book_Tag\"",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags = new LinkedHashSet<>();

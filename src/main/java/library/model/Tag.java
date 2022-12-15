@@ -16,7 +16,7 @@ public class Tag {
     private String name;
 
     @ManyToMany
-    @JoinTable(name = "Book_Tag",
+    @JoinTable(name = "\"Book_Tag\"",
             joinColumns = @JoinColumn(name = "tag_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
     private Set<Book> books = new LinkedHashSet<>();
