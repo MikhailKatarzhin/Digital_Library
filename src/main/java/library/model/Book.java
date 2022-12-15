@@ -35,4 +35,18 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     private Set<Chapter> chapters = new LinkedHashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "\"User_Book\"",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> consumers = new LinkedHashSet<>();
+
+    public Set<User> getConsumers() {
+        return consumers;
+    }
+
+    public void setConsumers(Set<User> consumers) {
+        this.consumers = consumers;
+    }
 }

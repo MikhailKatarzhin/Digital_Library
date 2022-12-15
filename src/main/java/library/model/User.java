@@ -57,6 +57,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "creator")
     private Set<Section> sections = new LinkedHashSet<>();
 
+    @ManyToMany(mappedBy = "consumers")
+    private Set<Book> purchasedBooks = new LinkedHashSet<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoleSet();
