@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS "User"
     ON UPDATE CASCADE
     ON DELETE NO ACTION,
     CONSTRAINT "CK_User_Email" CHECK (email::text ~ '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$'::text),
-    CONSTRAINT "CK_User_Username" CHECK (username::text ~ '[A-Za-z0-9]{3,25}'::text),
+    CONSTRAINT "CK_User_Username" CHECK (username::text ~ '[A-Za-z0-9 А-Яа-я]{3,25}'::text),
     CONSTRAINT "CK_User_Password_strength" CHECK (password::text ~ '^[A-Za-z0-9#$&\/%-\._]{8,60}$'::text)
     );
 
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS "Book_status"
 CREATE TABLE IF NOT EXISTS "Book"
 (
     id bigserial NOT NULL,
-    book_cycle_id bigint NOT NULL,
+    book_cycle_id bigint,
     creator_id bigint NOT NULL,
     name character varying(100) COLLATE pg_catalog."default" NOT NULL,
     book_status_id bigint NOT NULL DEFAULT 0,
