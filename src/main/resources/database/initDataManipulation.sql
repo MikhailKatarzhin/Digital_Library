@@ -27,6 +27,13 @@ ON CONFLICT (user_id, role_id)
     DO NOTHING;
 
 INSERT INTO
+    "Book_status" (id, name)
+VALUES
+    (0, 'Announce'), (1, 'Written'), (2, 'Finished'), (3, 'Hidden')
+ON CONFLICT (id)
+    DO NOTHING;
+
+INSERT INTO
     "Wallet" (id, balance)
 VALUES
     (0, 100000)
