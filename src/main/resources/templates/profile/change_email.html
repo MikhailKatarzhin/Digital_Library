@@ -16,7 +16,9 @@
         <h5 th:text="'Current email address: '+${currentEmail}"></h5>
         <div class="form-floating">
             <input type="text" class="form-control" th:value="${currentEmail}" minlength="8" maxlength="50"
-                   id="newEmail" name="email" placeholder="New email address" required>
+                id="newEmail" name="email" placeholder="New email address" required
+                pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+            >
             <label for="newEmail" th:text="'New email address'"></label>
         </div>
         <div th:if="${emailExistsError}" th:text="${emailExistsError}"></div>

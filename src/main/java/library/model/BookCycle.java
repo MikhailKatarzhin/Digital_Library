@@ -1,10 +1,17 @@
 package library.model;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Table(name = "\"Book_cycle\"")
 public class BookCycle {
     @Id
@@ -22,6 +29,9 @@ public class BookCycle {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "universe_id", nullable = false)
     private Universe universe;
+
+    @Column(name = "description", nullable = false, length = 1024)
+    private String description;
 
     @OneToMany(mappedBy = "bookCycle")
     private Set<Book> books = new LinkedHashSet<>();

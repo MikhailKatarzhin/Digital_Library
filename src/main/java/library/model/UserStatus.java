@@ -2,24 +2,26 @@ package library.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Entity
 @Getter
+@Setter
 @RequiredArgsConstructor
 @Table(name = "\"User_status\"")
-@Entity
-public class UserStatus{
-
+public class UserStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false, updatable = false)
+    @Column(name = "name", nullable = false, length = 15)
     private String name;
 
-    @OneToMany(mappedBy = "userStatus", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<User> users = new HashSet<>();
+    @OneToMany(mappedBy = "status")
+    private Set<User> users = new LinkedHashSet<>();
 }

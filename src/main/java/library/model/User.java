@@ -14,79 +14,59 @@ import java.util.Set;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Table(name = "\"User\"")
 @Entity
-public class User implements UserDetails {
-
+@Table(name = "\"User\"")
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false, updatable = false)
+    @Column(name = "username", nullable = false, length = 25)
     private String username;
 
-    @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false, unique = true)
+    @Column(name = "email", nullable = false, length = 100)
     private String email;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "status_id",nullable = false)
-    private UserStatus userStatus;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "status_id", nullable = false)
+    private UserStatus status;
+
+    @Column(name = "password", nullable = false, length = 60)
+    private String password;
+
+    @OneToMany(mappedBy = "creator")
+    private Set<BookCycle> myBookCycles = new LinkedHashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "\"User_Book\"",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private Set<Book> purchasedBooks = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "creator")
+    private Set<Chapter> myChapters = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "creator")
+    private Set<Book> myBooks = new LinkedHashSet<>();
 
     @ManyToMany
     @JoinTable(name = "\"User_Role\"",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<RoleOfUser> roleSet = new LinkedHashSet<>();
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<RoleOfUser> roleOfUsers = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "creator")
-    private Set<BookCycle> bookCycles = new LinkedHashSet<>();
+    private Set<Universe> myUniverses = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "creator")
-    private Set<Chapter> chapters = new LinkedHashSet<>();
+    private Set<Section> mySections = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "creator")
-    private Set<Book> books = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "creator")
-    private Set<Universe> universes = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "creator")
-    private Set<Section> sections = new LinkedHashSet<>();
-
-    @ManyToMany(mappedBy = "consumers")
-    private Set<Book> purchasedBooks = new LinkedHashSet<>();
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoleSet();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+    private Wallet wallet;
 
     public boolean hasRole(String roleName){
-        for (RoleOfUser role : roleSet)
+        for (RoleOfUser role : getRoleOfUsers())
             if (role.getName().equals(roleName))
                 return true;
         return false;

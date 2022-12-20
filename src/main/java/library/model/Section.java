@@ -1,8 +1,15 @@
 package library.model;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Table(name = "\"Section\"")
 public class Section {
     @Id
@@ -21,6 +28,6 @@ public class Section {
     @Column(name = "number", nullable = false)
     private Long number;
 
-    @Column(name = "content", nullable = false, length = 4096)
+    @Column(name = "content", nullable = false, length = 8192)
     private String content;
 }

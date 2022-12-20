@@ -1,10 +1,17 @@
 package library.model;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Table(name = "\"Book\"")
 public class Book {
     @Id
@@ -12,8 +19,8 @@ public class Book {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "book_cycle_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_cycle_id")
     private BookCycle bookCycle;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -27,20 +34,8 @@ public class Book {
     @JoinColumn(name = "book_status_id", nullable = false)
     private BookStatus bookStatus;
 
-    @ManyToMany
-    @JoinTable(name = "\"Book_Tag\"",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> tags = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "book")
-    private Set<Chapter> chapters = new LinkedHashSet<>();
-
-    @ManyToMany
-    @JoinTable(name = "\"User_Book\"",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> consumers = new LinkedHashSet<>();
+    @Column(name = "cost", nullable = false)
+    private Long cost;
 
     @Column(name = "year_of_creation")
     private Short yearOfCreation;
@@ -48,6 +43,21 @@ public class Book {
     @Column(name = "year_of_upload")
     private Short yearOfUpload;
 
-    @Column(name = "cost", nullable = false)
-    private Long cost;
+    @Column(name = "description", nullable = false, length = 1024)
+    private String description;
+
+    @ManyToMany
+    @JoinTable(name = "\"Book_Tag\"",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> tags = new LinkedHashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "\"User_Book\"",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> consumers = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "book")
+    private Set<Chapter> chapters = new LinkedHashSet<>();
 }

@@ -2,34 +2,29 @@ package library.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Entity
 @Getter
+@Setter
 @RequiredArgsConstructor
 @Table(name = "\"Role_of_User\"")
-@Entity
-public class RoleOfUser implements GrantedAuthority {
-
+public class RoleOfUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false, updatable = false)
+    @Column(name = "name", nullable = false, length = 15)
     private String name;
 
     @ManyToMany
     @JoinTable(name = "\"User_Role\"",
             joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<RoleOfUser> roleSet = new LinkedHashSet<>();
-
-    @Override
-    public String getAuthority() {
-        return getName();
-    }
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> users = new LinkedHashSet<>();
 }

@@ -12,14 +12,14 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                        <li class="nav-item" sec:authorize="hasAuthority('READER')">
-                            <a class="nav-link active" aria-current="page" th:href="@{/reader/library}">My books</a>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" th:href="@{/works/search}">Search books</a>
                         </li>
                         <li class="nav-item" sec:authorize="hasAuthority('AUTHOR')">
                             <a class="nav-link active" aria-current="page" th:href="@{/author/works}">My works</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="wdanavbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Profile
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown" sec:authorize="isAuthenticated()">

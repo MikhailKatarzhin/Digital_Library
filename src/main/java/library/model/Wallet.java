@@ -6,23 +6,24 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Table(name = "\"Wallet\"")
 @Entity
 @Getter
 @Setter
 @RequiredArgsConstructor
+@Table(name = "\"Wallet\"")
 public class Wallet {
+
+    @Column(name = "balance", nullable = false)
+    private Long balance;
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false)
-    private Long balance = 0L;
-
-
-    @OneToOne(cascade = CascadeType.ALL, optional = false, orphanRemoval = true)
-    @JoinColumn(name = "id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
 
     public boolean debitingFunds(Long requiredFunds) {
         if (requiredFunds < 0) throw new IllegalArgumentException("Required funds must be zero or positive");

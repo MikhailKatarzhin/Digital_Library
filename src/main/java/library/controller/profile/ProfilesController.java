@@ -1,4 +1,4 @@
-package library.controller;
+package library.controller.profile;
 
 import library.model.User;
 import library.service.interfaces.UserService;

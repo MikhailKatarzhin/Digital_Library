@@ -37,8 +37,8 @@ public class SignUpController {
         if (userService.getByUsername(user.getUsername()) != null) {
             model.addAttribute("usernameExistsError", "Username already exists");
         }
-        if (user.getPassword().isBlank()) {
-            model.addAttribute("passwordIsBlankError", "Password must be not blank!");
+        if (user.getPassword().isBlank() || !user.getPassword().matches("^[A-Za-z0-9#$&/%-._]{8,60}$")) {
+            model.addAttribute("passwordIsInvalid", "Password must have only [A-Za-z0-9#$&/%-._] 8 to 60 chars!");
         }
         if (!user.getPassword().equals(confirmPassword)) {
             model.addAttribute("passwordsAreDifferent", "Passwords are different");

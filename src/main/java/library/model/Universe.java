@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -23,4 +25,10 @@ public class Universe {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "creator_id", nullable = false)
     private User creator;
+
+    @Column(name = "description", nullable = false, length = 1024)
+    private String description;
+
+    @OneToMany(mappedBy = "universe")
+    private Set<BookCycle> bookCycles = new LinkedHashSet<>();
 }

@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .anonymous()
                     .antMatchers("/profile/**")
                         .authenticated()
-                    .antMatchers("/", "/webjars/**", "/css/**", "/home")
+                    .antMatchers("/", "/webjars/**", "/css/**", "/home/**", "/works/**")
                         .permitAll()
                     .anyRequest().authenticated()
                 .and()

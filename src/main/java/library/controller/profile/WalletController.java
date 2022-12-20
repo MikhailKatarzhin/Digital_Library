@@ -1,4 +1,4 @@
-package library.controller;
+package library.controller.profile;
 
 import library.service.interfaces.UserService;
 import library.service.interfaces.WalletService;

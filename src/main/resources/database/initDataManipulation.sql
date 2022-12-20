@@ -34,8 +34,8 @@ ON CONFLICT (id)
     DO NOTHING;
 
 INSERT INTO
-    "Wallet" (id, balance)
+    "Wallet" (id, user_id, balance)
 VALUES
-    (0, 100000)
+    (0, 0, 100000)
 ON CONFLICT (id)
     DO NOTHING;
