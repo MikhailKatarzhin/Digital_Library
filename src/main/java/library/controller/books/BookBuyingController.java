@@ -50,7 +50,10 @@ public class BookBuyingController {
             errs++;
             model.addAttribute("HaveNotMoneyError", "Your balance of wallet less than bok cost");
         }
-        userService.addPurchasedBook(book);
+        if (book.getCreator().getWallet().getBalance() > Long.MAX_VALUE - book.getCost()){
+            errs++;
+            model.addAttribute("AuthorHaveNotPlaceInWalletMoneyError", "Author wallet can't take your money. It's full.");
+        }
         if (errs > 0 ) {
             model.addAttribute("bookId", bookId);
             model.addAttribute("bookCost", bookService.getById(bookId).getCost());
@@ -58,6 +61,7 @@ public class BookBuyingController {
             model.addAttribute("walletBalance", userService.getRemoteUser().getWallet().getBalance());
             return "book/buyBook";
         }
+        userService.addPurchasedBook(book);
         return "redirect:/works/manage/"+bookId;
     }
 }

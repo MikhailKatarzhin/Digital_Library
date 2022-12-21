@@ -134,6 +134,11 @@ public class UserServiceImp implements UserService {
         wallet.debitingFunds(cost);
         user.setWallet(wallet);
         userRepository.save(user);
+        user = book.getCreator();
+        wallet = user.getWallet();
+        wallet.replenishmentFunds(book.getCost());
+        user.setWallet(wallet);
+        userRepository.save(user);
         return true;
     }
 
