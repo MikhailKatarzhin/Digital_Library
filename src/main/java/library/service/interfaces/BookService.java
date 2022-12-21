@@ -9,6 +9,8 @@ public interface BookService {
 
     Book saveBook(Book book);
 
+    Book saveNewBook(Book book);
+
     Book getById(long id);
 
     long pageCountByCreatorId();

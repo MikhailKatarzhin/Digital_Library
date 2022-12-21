@@ -57,7 +57,7 @@ public class BookAuthorAddController{
         if (errs > 0) {
             return "book/addBook";
         }
-        bookService.saveBook(book);
+        bookService.saveNewBook(book);
         return "redirect:/author/works/search";
     }
 }

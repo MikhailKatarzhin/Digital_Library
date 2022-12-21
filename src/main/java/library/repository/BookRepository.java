@@ -11,6 +11,20 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query(
+            value = "select COUNT(*) from \"Book\"" +
+                    " WHERE id=?1",
+            nativeQuery = true
+    )
+    Long countById(Long bookId);
+
+    @Query(
+            value = "select * from \"Book\"" +
+                    " WHERE id=?1",
+            nativeQuery = true
+    )
+    Book getById(Long bookId);
+
+    @Query(
             value = "SELECT COUNT(*) FROM \"Book\"" +
                     " WHERE creator_id = ?"
             , nativeQuery = true

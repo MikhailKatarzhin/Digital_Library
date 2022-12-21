@@ -26,6 +26,11 @@ public class BookServiceImp implements BookService {
     }
     @Override
     public Book saveBook(Book book) {
+        return bookRepository.save(book);
+    }
+
+    @Override
+    public Book saveNewBook(Book book) {
         book.setYearOfUpload((short) Year.now().getValue());
         book.setCreator(userService.getRemoteUser());
         book.setBookStatus(bookStatusService.getById(1L));
