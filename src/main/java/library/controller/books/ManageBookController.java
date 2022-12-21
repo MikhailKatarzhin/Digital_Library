@@ -65,7 +65,7 @@ public class ManageBookController {
     @Transactional
     @PostMapping("/{bookId}/setName")
     @PreAuthorize("(@userServiceImp.getRemoteUser().getId() == @bookServiceImp.getById(#bookId).creator.getId())")
-    public String setupName(@PathVariable Long bookId, Book book, ModelMap mddel) {
+    public String setupName(@PathVariable Long bookId, Book book, ModelMap model) {
         Book bok = bookService.getById(bookId);
         bok.setName(book.getName());
         bookService.saveBook(bok);
@@ -73,9 +73,19 @@ public class ManageBookController {
     }
 
     @Transactional
+    @PostMapping("/{bookId}/setCost")
+    @PreAuthorize("(@userServiceImp.getRemoteUser().getId() == @bookServiceImp.getById(#bookId).creator.getId())")
+    public String setupCost(@PathVariable Long bookId, Book book, ModelMap model) {
+        Book bok = bookService.getById(bookId);
+        bok.setCost(book.getCost());
+        bookService.saveBook(bok);
+        return "redirect:/works/manage/" + bookId;
+    }
+
+    @Transactional
     @PostMapping("/{bookId}/setDescription")
     @PreAuthorize("(@userServiceImp.getRemoteUser().getId() == @bookServiceImp.getById(#bookId).creator.getId())")
-    public String setupDescription(@PathVariable Long bookId, Book book, ModelMap mddel) {
+    public String setupDescription(@PathVariable Long bookId, Book book, ModelMap model) {
         Book bok = bookService.getById(bookId);
         bok.setDescription(book.getDescription());
         bookService.saveBook(bok);
