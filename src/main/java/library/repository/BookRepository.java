@@ -25,6 +25,12 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Book getById(Long bookId);
 
     @Query(
+            value = "SELECT COUNT(*) FROM \"Book\""
+            , nativeQuery = true
+    )
+    Long countBy(Long creatorId);
+
+    @Query(
             value = "SELECT COUNT(*) FROM \"Book\"" +
                     " WHERE creator_id = ?"
             , nativeQuery = true

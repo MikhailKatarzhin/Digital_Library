@@ -17,9 +17,11 @@ import java.util.List;
 @Controller
 public class BookAuthorSearchController extends AbstractPrimaryPagingController{
 
+    private final UserService userService;
     private final BookService bookService;
 
-    public BookAuthorSearchController(BookService bookService) {
+    public BookAuthorSearchController(UserService userService, BookService bookService) {
+        this.userService = userService;
         this.bookService = bookService;
     }
 
@@ -40,6 +42,7 @@ public class BookAuthorSearchController extends AbstractPrimaryPagingController{
 
     @GetMapping("/list/{currentPage}")
     public String myWorks(@PathVariable Long currentPage, BookSearchRequest bookSearchRequest, ModelMap model){
+        bookSearchRequest.setCreatorName(userService.getRemoteUser().getUsername());
         if (currentPage < 1L)
             return firstPage();
         Long nPage = bookService.pageCountByBookSearch(bookSearchRequest);

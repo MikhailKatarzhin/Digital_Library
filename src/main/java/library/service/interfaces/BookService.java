@@ -13,6 +13,8 @@ public interface BookService {
 
     Book getById(long id);
 
+    long pageCount();
+
     long pageCountByCreatorId();
 
     long pageCountByBookSearch(BookSearchRequest bookSearchRequest);

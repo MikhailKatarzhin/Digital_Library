@@ -11,6 +11,73 @@
 <div th:insert="~{fragments/navigation_fragments  :: navbar}"></div>
 <table class="m-auto text-center border-1">
     <tr><td><h1>Book search</h1></td></tr>
+    <tr><td><table class="table table-striped table-sm table-responsive" th:object="${search}">
+    <form th:action="@{/works/search/list/__${currentPage}__}" method="get">
+        <tr>
+            <th scope="col" colspan="3">Book name</th>
+            <th scope="col" colspan="3">Author name</th>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <input type="text" th:class="'form-control'" onchange="this.form.submit()" th:value="*{bookName}"
+                       id="bookName" name="bookName" placeholder="Book name"
+                       maxlength="100" minlength="2" pattern="^[A-Za-z0-9 А-Яа-яЁё.,!?:;-']{1,100}$"
+                >
+            </td>
+            <td colspan="3">
+                <input type="text" th:class="'form-control'" onchange="this.form.submit()" th:value="*{creatorName}"
+                       id="creatorName" name="creatorName" placeholder="Author name"
+                       maxlength="25" minlength="3" pattern="^[A-Za-z0-9 А-Яа-яЁё.,\/!? :;-]{3,25}$"
+                >
+            </td>
+        </tr>
+        <tr>
+            <th scope="col">Min year creation</th>
+            <th scope="col">Max year creation</th>
+            <th scope="col">Min year upload</th>
+            <th scope="col">Max year upload</th>
+            <th scope="col">Min cost</th>
+            <th scope="col">Max cost</th>
+        </tr>
+        <tr>
+            <td>
+                <input type="number" th:class="'form-control'" onchange="this.form.submit()" th:value="*{minYoC}" required
+                       id="minYearOfCreation" name="minYearOfCreation" placeholder="Min year creation"
+                       min="-10000" max="2100" minlength="1"
+                >
+            </td>
+            <td>
+                <input type="number" th:class="'form-control'" onchange="this.form.submit()" th:value="*{maxYoC}" required
+                       id="maxYearOfCreation" name="maxYearOfCreation" placeholder="Max year creation"
+                       min="-10000" max="2100" minlength="1"
+                >
+            </td>
+            <td>
+                <input type="number" th:class="'form-control'" onchange="this.form.submit()" th:value="*{minYoU}" required
+                       id="minYearOfUpload" name="minYearOfUpload" placeholder="Min year upload"
+                       min="2022" max="2100" minlength="1"
+                >
+            </td>
+            <td>
+                <input type="number" th:class="'form-control'" onchange="this.form.submit()" th:value="*{maxYoU}" required
+                       id="maxYearOfUpload" name="maxYearOfUpload" placeholder="Max year upload"
+                       min="2022" max="2100" minlength="1"
+                >
+            </td>
+            <td>
+                <input type="number" th:class="'form-control'" onchange="this.form.submit()" th:value="*{minCost}" required
+                       id="minCost" name="minCost" placeholder="Min cost"
+                       min="0" max="10000" minlength="1"
+                >
+            </td>
+            <td>
+                <input type="number" th:class="'form-control'" onchange="this.form.submit()" th:value="*{maxCost}" required
+                       id="maxCost" name="maxCost" placeholder="Max cost"
+                       min="0" max="10000" minlength="1"
+                >
+            </td>
+        </tr>
+    </form></table></td></tr>
     <tr><td><table class="table table-striped table-sm table-responsive">
         <thead><tr>
             <th scope="col">Book name</th>

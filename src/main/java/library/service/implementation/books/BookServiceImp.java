@@ -42,8 +42,17 @@ public class BookServiceImp implements BookService {
         return bookRepository.getById(id);
     }
 
+    @Override
+    public long pageCount() {
+        long nSearchedBook = bookRepository.count();
+        long nPage = nSearchedBook / ROW_COUNT + (nSearchedBook % ROW_COUNT == 0 ? 0 : 1);
+        return nPage == 0 ? nPage + 1 : nPage;
+    }
+
     public long pageCountByCreatorId() {
-        return bookRepository.countByCreatorId(userService.getRemoteUserId());
+        long nSearchedBook = bookRepository.countByCreatorId(userService.getRemoteUserId());
+        long nPage = nSearchedBook / ROW_COUNT + (nSearchedBook % ROW_COUNT == 0 ? 0 : 1);
+        return nPage == 0 ? nPage + 1 : nPage;
     }
 
     @Override

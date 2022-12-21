@@ -24,7 +24,7 @@ public class BookSearchController extends AbstractPrimaryPagingController{
 
     @Override
     protected Long pageCount() {
-        return bookService.pageCountByCreatorId();
+        return bookService.pageCount();
     }
 
     @Override
