@@ -33,12 +33,12 @@ public class BookSearchController extends AbstractPrimaryPagingController{
     }
 
     @GetMapping
-    public String myWorks(){
+    public String searchWorks(){
         return "redirect:/works/search/list/1";
     }
 
     @GetMapping("/list/{currentPage}")
-    public String myWorks(@PathVariable Long currentPage, BookSearchRequest bookSearchRequest, ModelMap model){
+    public String searchWorks(@PathVariable Long currentPage, BookSearchRequest bookSearchRequest, ModelMap model){
         if (currentPage < 1L)
             return firstPage();
         Long nPage = bookService.pageCountByBookSearch(bookSearchRequest);

@@ -1,10 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>New book</title>
+    <link rel="stylesheet" type="text/css"
+          href="/webjars/bootstrap/5.1.1/css/bootstrap.min.css" />
 </head>
 <body>
+<div th:insert="~{fragments/navigation_fragments  :: navbar}"></div>
+<form th:action="@{/author/works/add}" method="post" class="m-auto col-3 text-center">
+    <h1 class="h3 mb-3 fw-normal">New book</h1>
 
+    <div class="form-floating">
+        <input type="text" th:class="'form-control'+(${bookNameInvalid!=null}?' is-invalid':'')"
+               id="name" name="name" placeholder="Book name" required
+               maxlength="100" minlength="2" pattern="^[A-Za-z0-9 А-Яа-яЁё.,!?:;-']{1,100}$"
+        >
+        <label for="name" th:text="${bookNameInvalid==null}?'Book name':${bookNameInvalid}"></label>
+    </div>
+
+    <div class="form-floating">
+        <textarea th:class="'form-control'+(${bookDescriptionInvalid!=null}?' is-invalid':'')"
+               id="description" name="description" placeholder="Book name" required
+               maxlength="1024" minlength="0" pattern="^[A-Za-z0-9 А-Яа-яЁё.,!?:;-']{0,1024}$"
+        ></textarea>
+        <label for="description" th:text="${bookDescriptionInvalid==null}?'Book description':${bookDescriptionInvalid}"></label>
+    </div>
+
+    <div class="form-floating">
+        <input type="number" th:class="'form-control'+(${bookCostInvalid!=null}?' is-invalid':'')"
+               id="cost" name="cost" placeholder="Book cost" required
+               min="0" max="10000"
+        >
+        <label for="cost" th:text="${bookCostInvalid==null}?'Book cost':${bookCostInvalid}"></label>
+    </div>
+
+    <div class="form-floating">
+        <input type="number" th:class="'form-control'+(${bookYearInvalid!=null}?' is-invalid':'')"
+               id="yearOfCreation" name="yearOfCreation" placeholder="Book year of creation" required
+               min="-10000" max="2100"
+        >
+        <label for="yearOfCreation" th:text="${bookYearInvalid==null}?'Year of creation':${bookYearInvalid}"></label>
+    </div>
+
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Add book</button>
+</form>
+<script type="text/javascript"
+        src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript"
+        src="/webjars/bootstrap/5.1.1/js/bootstrap.min.js"></script>
 </body>
 </html>

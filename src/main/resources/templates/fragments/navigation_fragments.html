@@ -15,9 +15,6 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" th:href="@{/works/search}">Search books</a>
                         </li>
-                        <li class="nav-item" sec:authorize="hasAuthority('AUTHOR')">
-                            <a class="nav-link active" aria-current="page" th:href="@{/author/works}">My works</a>
-                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="wdanavbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Profile
@@ -41,16 +38,16 @@
                                 </form></li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown" sec:authorize="hasAuthority('ADMINISTRATOR')">
+                        <li class="nav-item dropdown" sec:authorize="hasAuthority('AUTHOR')">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Administration
+                                Author management
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                <li><form th:action="@{/TO_DO}">
-                                    <button type="submit" class="dropdown-item">TO DO</button>
+                                <li><form th:action="@{/author/works/search}">
+                                    <button type="submit" class="dropdown-item">My works</button>
                                 </form></li>
-                                <li><form th:action="@{/TO_DO}">
-                                    <button type="submit" class="dropdown-item">TO DO</button>
+                                <li><form th:action="@{/author/works/add}" method="get">
+                                    <button type="submit" class="dropdown-item">New book</button>
                                 </form></li>
                             </ul>
                         </li>

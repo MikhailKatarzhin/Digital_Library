@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Управление поездкой</title>
+    <link rel="stylesheet" type="text/css"
+          href="/webjars/bootstrap/5.1.1/css/bootstrap.min.css" />
+</head>
+<body>
+<div th:insert="~{fragments/navigation_fragments  :: navbar}"></div>
+    <table class="table table-striped table-sm table-responsive" th:object="${book}">
+        <tr>
+            <th scope="col">Book name</th>
+            <td ><form th:action="@{/works/manage/__${bookId}__/setName}" method="post">
+                <input type="text" th:class="'form-control'" onchange="this.form.submit()" th:value="*{name}"
+                        th:readonly="${!book.getCreator().getUsername().equals(__${userName}__)}"
+                        id="name" name="name" placeholder="Book name"
+                        maxlength="100" minlength="2" pattern="^[A-Za-z0-9 А-Яа-яЁё.,!?:;-']{1,100}$"
+                >
+            </form></td>
+        </tr>
+        <tr>
+            <th scope="col">Creator name</th>
+            <td th:text="${book.creator.username}"></td>
+        </tr>
+        <tr>
+            <th scope="col">Cost</th>
+            <td >
+                <input type="number" th:class="'form-control'"
+                       id="cost" name="cost" placeholder="Book cost"
+                       min="0" max="10000" th:value="*{cost}"
+                       th:readonly="${!book.getCreator().getUsername().equals(__${userName}__)}"
+                ></td>
+        </tr>
+        <tr>
+            <th scope="col">Description</th>
+            <td ><form th:action="@{/works/manage/__${bookId}__/setDescription}" method="post">
+                <input th:class="'form-control'" type="text"
+                    id="description" name="description" placeholder="Book description"
+                    onchange="this.form.submit()" th:value="*{description}"
+                    th:readonly="${!book.getCreator().getUsername().equals(__${userName}__)}"
+                    maxlength="1024" minlength="0"
+                >
+            </form></td>
+        </tr>
+        <tr>
+            <th scope="col">Book Cycle</th>
+            <td th:text="${book.bookCycle} ? ${book.bookCycle.name} : 'stanalone'"></td>
+        </tr>
+        <tr>
+            <th scope="col">Book Status</th>
+            <td><form th:action="@{/works/manage/__${bookId}__/setStatus}" method="post">
+                <select name="statusSelectId" onchange="this.form.submit()" class="form-select"
+                        th:readonly="${!book.getCreator().getUsername().equals(__${userName}__)}"
+                        aria-label="Default select example">
+                    <option th:each="tstatus : ${statusList}" th:value="${tstatus.id}" th:text="${tstatus.name}"
+                            th:selected="${tstatus}==*{getBookStatus()}"
+                            th:readonly="${!book.getCreator().getUsername().equals(__${userName}__)}"></option>
+                </select>
+            </form></td>
+        </tr>
+        <tr>
+<!--            <th scope="col">Chapters</th>-->
+            <th scope="col">Year creation</th>
+            <th scope="col">Year upload</th>
+        </tr>
+        <tr>
+<!--            <td th:text="${book.chapters.size()}" style="border-bottom:1px solid black"></td>-->
+            <td th:text="${book.yearOfCreation}" style="border-bottom:1px solid black"></td>
+            <td th:text="${book.yearOfUpload}" style="border-bottom:1px solid black"></td>
+        </tr>
+    </table>
+    <table class="table table-striped table-sm table-responsive">
+        <tr>
+            <th></th>
+            <th scope="col">Chapter №</th>
+            <th scope="col">Chapter Name</th>
+            <th></th>
+        </tr>
+        <tr th:each="chapter : ${chapterList}">
+            <td></td>
+            <td th:text="${chapter.number}"></td>
+            <td th:text="${chapter.name}"></td>
+<!--            <td><form th:action="@{/driver/manage/trip/__${trip.id}__/deleteLocation/__${routeSequence.id}__}" method="post">-->
+<!--                <input class="w-100 btn btn-sm btn-danger" type="submit" value="Убрать локацию" th:disabled="${trip.status.getId()} != 1">-->
+<!--            </form></td>-->
+        </tr>
+    </table>
+<script type="text/javascript"
+        src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript"
+        src="/webjars/bootstrap/5.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>

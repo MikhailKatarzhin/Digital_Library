@@ -34,19 +34,24 @@ public class SignUpController {
 
     @PostMapping
     public String addUser(@RequestParam String confirmPassword, User user, ModelMap model) {
+        int errs = 0;
         if (userService.getByUsername(user.getUsername()) != null) {
             model.addAttribute("usernameExistsError", "Username already exists");
+            errs++;
         }
         if (user.getPassword().isBlank() || !user.getPassword().matches("^[A-Za-z0-9#$&/%-._]{8,60}$")) {
             model.addAttribute("passwordIsInvalid", "Password must have only [A-Za-z0-9#$&/%-._] 8 to 60 chars!");
+            errs++;
         }
         if (!user.getPassword().equals(confirmPassword)) {
             model.addAttribute("passwordsAreDifferent", "Passwords are different");
+            errs++;
         }
         if (userService.emailExists(user.getEmail())) {
             model.addAttribute("emailExistsError", "Email already exists");
+            errs++;
         }
-        if (model.size() > 2) {
+        if (errs > 0) {
             return "sign_up";
         }
         Long[] rolesId = new Long[1];

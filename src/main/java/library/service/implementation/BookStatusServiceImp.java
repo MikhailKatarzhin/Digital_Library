@@ -5,6 +5,8 @@ import library.repository.BookStatusRepository;
 import library.service.interfaces.BookStatusService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BookStatusServiceImp implements BookStatusService {
 
@@ -17,5 +19,10 @@ public class BookStatusServiceImp implements BookStatusService {
     @Override
     public BookStatus getById(Long bookStatusId) {
         return bookStatusRepository.getById(bookStatusId);
+    }
+
+    @Override
+    public List<BookStatus> getAll() {
+        return bookStatusRepository.findAll();
     }
 }

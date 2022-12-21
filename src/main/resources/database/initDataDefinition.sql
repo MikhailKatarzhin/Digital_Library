@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS "User"
     ON UPDATE CASCADE
     ON DELETE NO ACTION,
     CONSTRAINT "CK_User_Email" CHECK (email::text ~ '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$'::text),
-    CONSTRAINT "CK_User_Username" CHECK (username::text ~ '[A-Za-z0-9 А-Яа-яЁё]{3,25}'::text),
-    CONSTRAINT "CK_User_Password_strength" CHECK (password::text ~ '^[A-Za-z0-9#$&\/%-\._]{8,60}$'::text)
+    CONSTRAINT "CK_User_Username" CHECK (username::text ~ '[A-Za-z0-9 А-Яа-яЁё.,"\/!? :;-]{3,25}'::text),
+    CONSTRAINT "CK_User_Password_strength" CHECK (password::text ~ '^[A-Za-z0-9#$&\/%.,"\/!? :;-_]{8,60}$'::text)
     );
 
 CREATE TABLE IF NOT EXISTS "Wallet"
@@ -72,8 +72,7 @@ CREATE TABLE IF NOT EXISTS "Universe"
     REFERENCES "User" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION,
-    CONSTRAINT CK_Universe_name CHECK (name::text ~ '^[]{A-Za-z0-9 А-Яа-яЁё[punct]}$'::text),
-    CONSTRAINT "CK_Book_Description" CHECK (description::text ~ '^[A-Za-z0-9 А-Яа-яЁё[:punct:]]{0,1024}$'::text)
+    CONSTRAINT CK_Universe_name CHECK (name::text ~ '^[]{A-Za-z0-9 А-Яа-яЁё[punct]}$'::text)
     );
 
 CREATE TABLE IF NOT EXISTS "Book_cycle"
@@ -92,8 +91,7 @@ CREATE TABLE IF NOT EXISTS "Book_cycle"
     REFERENCES "Universe" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION,
-    CONSTRAINT "CH_Book_cycle_Name" CHECK (name::text ~ '^[]{A-Za-z0-9 А-Яа-яЁё[:punct:]}$'::text),
-    CONSTRAINT "CK_Book_Description" CHECK (description::text ~ '^[A-Za-z0-9 А-Яа-яЁё[:punct:]]{0,1024}$'::text)
+    CONSTRAINT "CH_Book_cycle_Name" CHECK (name::text ~ '^[]{A-Za-z0-9 А-Яа-яЁё[:punct:]}$'::text)
     );
 
 CREATE TABLE IF NOT EXISTS "Book_status"
@@ -132,8 +130,7 @@ CREATE TABLE IF NOT EXISTS "Book"
     CONSTRAINT "CH_Book_Year_of_creation" CHECK ("Book".year_of_creation >= -10000 AND "Book".year_of_creation <= 2100),
     CONSTRAINT "CH_Book_Year_of_upload" CHECK ("Book".year_of_upload >= 2022 AND "Book".year_of_upload <= 2100),
     CONSTRAINT "CH_Cost" CHECK ("Book".cost >= 0 AND "Book".cost < 10000),
-    CONSTRAINT "CK_Book_Name" CHECK (name::text ~ '^[A-Za-z0-9 А-Яа-яЁё[:punct:]]{1,100}$'::text),
-    CONSTRAINT "CK_Book_Description" CHECK (description::text ~ '^[A-Za-z0-9 А-Яа-яЁё[:punct:]]{0,1024}$'::text)
+    CONSTRAINT "CK_Book_Name" CHECK (name::text ~ '^[A-Za-z0-9 А-Яа-яЁё[:punct:]''"!?:;-]{1,100}$'::text)
     );
 
 CREATE TABLE IF NOT EXISTS "Chapter"

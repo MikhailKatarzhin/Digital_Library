@@ -17,7 +17,7 @@
     <div class="form-floating">
         <input type="text" th:class="'form-control'+(${usernameExistsError!=null}?' is-invalid':'')"
                id="floatingInput" name="username" placeholder="Username" required
-               maxlength="25" minlength="4" pattern="[A-Za-z0-9 А-Яа-яЁё]{3,25}"
+               maxlength="25" minlength="4" pattern="[A-Za-z0-9 А-Яа-яЁё\.-]{3,25}"
         >
         <label for="floatingInput" th:text="${usernameExistsError==null}?'Username':${usernameExistsError}"></label>
     </div>

@@ -60,4 +60,11 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     private Set<Chapter> chapters = new LinkedHashSet<>();
+
+    public boolean hasConsumer(String consumerName){
+        for (User user : consumers)
+            if (user.getUsername().equals(consumerName))
+                return true;
+        return false;
+    }
 }

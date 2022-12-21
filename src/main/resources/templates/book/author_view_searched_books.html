@@ -9,8 +9,8 @@
 </head>
 <body>
 <div th:insert="~{fragments/navigation_fragments  :: navbar}"></div>
-<table class="m-auto text-center border-1">
-    <tr><td><h1>Book search</h1></td></tr>
+<table class="m-auto text-center">
+    <tr><td><h1>My Book search</h1></td></tr>
     <tr><td><table class="table table-striped table-sm table-responsive">
         <thead><tr>
             <th scope="col">Book name</th>
@@ -33,7 +33,7 @@
                 </div></td>
                 <td rowspan="5">
                     <form th:action="@{/works/manage/__${book.id}__}" method="get">
-                        <input class="w-100 btn btn-sm btn-danger h-auto" type="submit" value="Book Description">
+                        <input class="w-100 btn btn-sm btn-danger" type="submit" value="Book Description">
                     </form>
                 </td>
             </tr>
@@ -61,7 +61,7 @@
         </td></tr>
     </table></td></tr>
     <tr>
-        <td th:insert="~{fragments/navigation_fragments  :: paging ('works/search', ${currentPage}, ${nPage})}"></td>
+        <td th:insert="~{fragments/navigation_fragments  :: paging ('author/works/search', ${currentPage}, ${nPage})}"></td>
     </tr>
 </table>
 <script type="text/javascript"

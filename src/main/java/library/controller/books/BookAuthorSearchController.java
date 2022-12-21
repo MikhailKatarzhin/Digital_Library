@@ -13,15 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping("/author")
+@RequestMapping("/author/works/search")
 @Controller
 public class BookAuthorSearchController extends AbstractPrimaryPagingController{
 
-    private final UserService userService;
     private final BookService bookService;
 
-    public BookAuthorSearchController(UserService userService, BookService bookService) {
-        this.userService = userService;
+    public BookAuthorSearchController(BookService bookService) {
         this.bookService = bookService;
     }
 
@@ -32,15 +30,15 @@ public class BookAuthorSearchController extends AbstractPrimaryPagingController{
 
     @Override
     protected String getPrefix() {
-        return "/author/works";
+        return "/author/works/search";
     }
 
-    @GetMapping("/works/list")
-    public String myWorks(BookSearchRequest bookSearchRequest, ModelMap model){
-        return myWorks(1L, bookSearchRequest, model);
+    @GetMapping
+    public String myWorks(){
+        return "redirect:/author/works/search/list/1";
     }
 
-    @GetMapping("/works/list/{currentPage}")
+    @GetMapping("/list/{currentPage}")
     public String myWorks(@PathVariable Long currentPage, BookSearchRequest bookSearchRequest, ModelMap model){
         if (currentPage < 1L)
             return firstPage();
@@ -49,13 +47,10 @@ public class BookAuthorSearchController extends AbstractPrimaryPagingController{
             return lastPage();
         model.addAttribute("nPage", nPage);
         model.addAttribute("currentPage", currentPage);
-        bookSearchRequest.setCreatorName(userService.getRemoteUser().getUsername());
-        List<Book> bookList = bookService.searchedBookListByNumberPageListAndBookSearchRequest(
+        List<Book> bookList = bookService.searchedBookListByNumberPageListAndBookSearchRequestRemoteAuthor(
                 currentPage, bookSearchRequest);
         model.addAttribute("search", bookSearchRequest);
         model.addAttribute("books", bookList);
-        return "book/view_searched_books";
+        return "book/author_view_searched_books";
     }
-
-
 }

@@ -64,4 +64,10 @@ public class BookServiceImp implements BookService {
                 bookSearchRequest.getMaxYoC(), ROW_COUNT, (currentPage - 1) * ROW_COUNT
         );
     }
+
+    @Override
+    public List<Book> searchedBookListByNumberPageListAndBookSearchRequestRemoteAuthor(long currentPage, BookSearchRequest bookSearchRequest) {
+        bookSearchRequest.setCreatorName(userService.getRemoteUser().getUsername());
+        return searchedBookListByNumberPageListAndBookSearchRequest(currentPage, bookSearchRequest);
+    }
 }
