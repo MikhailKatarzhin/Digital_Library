@@ -42,7 +42,6 @@ public class BookReaderSearchController extends AbstractPrimaryPagingController{
 
     @GetMapping("/list/{currentPage}")
     public String myWorks(@PathVariable Long currentPage, BookSearchRequest bookSearchRequest, ModelMap model){
-        bookSearchRequest.setCreatorName(userService.getRemoteUser().getUsername());
         if (currentPage < 1L)
             return firstPage();
         Long nPage = bookService.pageCountByBookSearchRemoteReader(bookSearchRequest);
