@@ -69,6 +69,19 @@ public class BookServiceImp implements BookService {
     }
 
     @Override
+    public long pageCountAvailableByBookSearch(BookSearchRequest bookSearchRequest) {
+        Long nSearchedBook = bookRepository.countNotHiddenBookByBookSearchRequest(
+                bookSearchRequest.getBookStatusName(), "%" + bookSearchRequest.getCreatorName() + "%",
+                "%" + bookSearchRequest.getBookName() + "%", bookSearchRequest.getMinCost(),
+                bookSearchRequest.getMaxCost(), bookSearchRequest.getMinYoU(),
+                bookSearchRequest.getMaxYoU(), bookSearchRequest.getMinYoC(),
+                bookSearchRequest.getMaxYoC()
+        );
+        long nPage = nSearchedBook / ROW_COUNT + (nSearchedBook % ROW_COUNT == 0 ? 0 : 1);
+        return nPage == 0 ? nPage + 1 : nPage;
+    }
+
+    @Override
     public long pageCountByBookSearchRemoteReader(BookSearchRequest bookSearchRequest) {
         Long nSearchedBook = bookRepository.countBookByBookSearchRequestAndReaderId(
                 bookSearchRequest.getBookStatusName(), "%" + bookSearchRequest.getCreatorName() + "%",
@@ -84,6 +97,17 @@ public class BookServiceImp implements BookService {
     @Override
     public List<Book> searchedBookListByNumberPageListAndBookSearchRequest(long currentPage, BookSearchRequest bookSearchRequest) {
         return bookRepository.getBookListByBookSearchRequest(
+                bookSearchRequest.getBookStatusName(), "%" + bookSearchRequest.getCreatorName() + "%",
+                "%" + bookSearchRequest.getBookName() + "%", bookSearchRequest.getMinCost(),
+                bookSearchRequest.getMaxCost(), bookSearchRequest.getMinYoU(),
+                bookSearchRequest.getMaxYoU(), bookSearchRequest.getMinYoC(),
+                bookSearchRequest.getMaxYoC(), ROW_COUNT, (currentPage - 1) * ROW_COUNT
+        );
+    }
+
+    @Override
+    public List<Book> searchedAvailableBookListByNumberPageListAndBookSearchRequest(long currentPage, BookSearchRequest bookSearchRequest) {
+        return bookRepository.getNotHiddenBookListByBookSearchRequest(
                 bookSearchRequest.getBookStatusName(), "%" + bookSearchRequest.getCreatorName() + "%",
                 "%" + bookSearchRequest.getBookName() + "%", bookSearchRequest.getMinCost(),
                 bookSearchRequest.getMaxCost(), bookSearchRequest.getMinYoU(),

@@ -19,9 +19,13 @@ public interface BookService {
 
     long pageCountByBookSearch(BookSearchRequest bookSearchRequest);
 
+    long pageCountAvailableByBookSearch(BookSearchRequest bookSearchRequest);
+
     long pageCountByBookSearchRemoteReader(BookSearchRequest bookSearchRequest);
 
     List<Book> searchedBookListByNumberPageListAndBookSearchRequest(long currentPage, BookSearchRequest bookSearchRequest);
+
+    List<Book> searchedAvailableBookListByNumberPageListAndBookSearchRequest(long currentPage, BookSearchRequest bookSearchRequest);
 
     List<Book> searchedBookListByNumberPageListAndBookSearchRequestRemoteReader(long currentPage, BookSearchRequest bookSearchRequest);
 

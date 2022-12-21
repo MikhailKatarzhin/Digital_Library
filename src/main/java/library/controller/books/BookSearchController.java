@@ -41,12 +41,12 @@ public class BookSearchController extends AbstractPrimaryPagingController{
     public String searchWorks(@PathVariable Long currentPage, BookSearchRequest bookSearchRequest, ModelMap model){
         if (currentPage < 1L)
             return firstPage();
-        Long nPage = bookService.pageCountByBookSearch(bookSearchRequest);
+        Long nPage = bookService.pageCountAvailableByBookSearch(bookSearchRequest);
         if (currentPage > nPage)
             return lastPage();
         model.addAttribute("nPage", nPage);
         model.addAttribute("currentPage", currentPage);
-        List<Book> bookList = bookService.searchedBookListByNumberPageListAndBookSearchRequest(
+        List<Book> bookList = bookService.searchedAvailableBookListByNumberPageListAndBookSearchRequest(
                 currentPage, bookSearchRequest);
         model.addAttribute("search", bookSearchRequest);
         model.addAttribute("books", bookList);

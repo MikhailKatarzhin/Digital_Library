@@ -56,6 +56,25 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     );
 
     @Query(
+            value = "SELECT COUNT(*) FROM \"Book\" b" +
+                    " INNER JOIN \"User\" u on b.creator_id = u.id" +
+                    " INNER JOIN \"Book_status\" s on b.book_status_id = s.id" +
+                    " AND s.name LIKE ?1" +
+                    " WHERE u.username LIKE ?2" +
+                    " AND b.book_status_id != 3" +
+                    " AND b.name LIKE ?3" +
+                    " AND b.cost >= ?4 AND b.cost <= ?5" +
+                    " AND b.year_of_upload >= ?6 AND b.year_of_upload <= ?7" +
+                    " AND b.year_of_creation >= ?8 AND b.year_of_creation <= ?9"
+            , nativeQuery = true
+    )
+    Long countNotHiddenBookByBookSearchRequest(String statusName, String username,String BookName,
+                                      long minCost, long maxCost,
+                                      long minYearOfUpload, long maxYearOfUpload,
+                                      long minYearOfCreation, long maxYearOfCreation
+    );
+
+    @Query(
             value = "SELECT * FROM \"Book\" b" +
                     " INNER JOIN \"User\" u on b.creator_id = u.id" +
                     " INNER JOIN \"Book_status\" s on b.book_status_id = s.id" +
@@ -70,6 +89,28 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             , nativeQuery = true
     )
     List<Book> getBookListByBookSearchRequest(String statusName, String username, String BookName,
+                                              long minCost, long maxCost,
+                                              short minYearOfUpload, short maxYearOfUpload,
+                                              short minYearOfCreation, short maxYearOfCreation,
+                                              long limit, long offset
+    );
+
+    @Query(
+            value = "SELECT * FROM \"Book\" b" +
+                    " INNER JOIN \"User\" u on b.creator_id = u.id" +
+                    " INNER JOIN \"Book_status\" s on b.book_status_id = s.id" +
+                    " WHERE s.name ILIKE ?1" +
+                    " AND b.book_status_id != 3" +
+                    " AND u.username ILIKE ?2" +
+                    " AND b.name ILIKE ?3" +
+                    " AND b.cost >= ?4 AND b.cost <= ?5" +
+                    " AND b.year_of_upload >= ?6 AND b.year_of_upload <= ?7" +
+                    " AND b.year_of_creation >= ?8 AND b.year_of_creation <= ?9" +
+                    " ORDER BY b.name" +
+                    " LIMIT ?10 OFFSET ?11"
+            , nativeQuery = true
+    )
+    List<Book> getNotHiddenBookListByBookSearchRequest(String statusName, String username, String BookName,
                                               long minCost, long maxCost,
                                               short minYearOfUpload, short maxYearOfUpload,
                                               short minYearOfCreation, short maxYearOfCreation,

@@ -71,4 +71,11 @@ public class User{
                 return true;
         return false;
     }
+
+    public boolean hasBook(Long bookId){
+        for (Book book : getPurchasedBooks())
+            if ((long)book.getId() == (long)bookId)
+                return true;
+        return false;
+    }
 }
