@@ -69,6 +69,19 @@ public class BookServiceImp implements BookService {
     }
 
     @Override
+    public long pageCountByBookSearchRemoteReader(BookSearchRequest bookSearchRequest) {
+        Long nSearchedBook = bookRepository.countBookByBookSearchRequestAndReaderId(
+                bookSearchRequest.getBookStatusName(), "%" + bookSearchRequest.getCreatorName() + "%",
+                "%" + bookSearchRequest.getBookName() + "%", bookSearchRequest.getMinCost(),
+                bookSearchRequest.getMaxCost(), bookSearchRequest.getMinYoU(),
+                bookSearchRequest.getMaxYoU(), bookSearchRequest.getMinYoC(),
+                bookSearchRequest.getMaxYoC(), userService.getRemoteUserId()
+        );
+        long nPage = nSearchedBook / ROW_COUNT + (nSearchedBook % ROW_COUNT == 0 ? 0 : 1);
+        return nPage == 0 ? nPage + 1 : nPage;
+    }
+
+    @Override
     public List<Book> searchedBookListByNumberPageListAndBookSearchRequest(long currentPage, BookSearchRequest bookSearchRequest) {
         return bookRepository.getBookListByBookSearchRequest(
                 bookSearchRequest.getBookStatusName(), "%" + bookSearchRequest.getCreatorName() + "%",
@@ -76,6 +89,18 @@ public class BookServiceImp implements BookService {
                 bookSearchRequest.getMaxCost(), bookSearchRequest.getMinYoU(),
                 bookSearchRequest.getMaxYoU(), bookSearchRequest.getMinYoC(),
                 bookSearchRequest.getMaxYoC(), ROW_COUNT, (currentPage - 1) * ROW_COUNT
+        );
+    }
+
+    @Override
+    public List<Book> searchedBookListByNumberPageListAndBookSearchRequestRemoteReader(long currentPage, BookSearchRequest bookSearchRequest) {
+        return bookRepository.getBookListByBookSearchRequestAndReaderId(
+                bookSearchRequest.getBookStatusName(), "%" + bookSearchRequest.getCreatorName() + "%",
+                "%" + bookSearchRequest.getBookName() + "%", bookSearchRequest.getMinCost(),
+                bookSearchRequest.getMaxCost(), bookSearchRequest.getMinYoU(),
+                bookSearchRequest.getMaxYoU(), bookSearchRequest.getMinYoC(),
+                bookSearchRequest.getMaxYoC(),  userService.getRemoteUserId(),
+                ROW_COUNT, (currentPage - 1) * ROW_COUNT
         );
     }
 

@@ -75,4 +75,47 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                                               short minYearOfCreation, short maxYearOfCreation,
                                               long limit, long offset
     );
+
+    @Query(
+            value = "SELECT * FROM \"Book\" b" +
+                    " INNER JOIN \"User\" u on b.creator_id = u.id" +
+                    " INNER JOIN \"Book_status\" s on b.book_status_id = s.id" +
+                    " INNER JOIN \"User_Book\" ub on ub.book_id = b.id" +
+                    " WHERE s.name ILIKE ?1" +
+                    " AND u.username ILIKE ?2" +
+                    " AND b.name ILIKE ?3" +
+                    " AND b.cost >= ?4 AND b.cost <= ?5" +
+                    " AND b.year_of_upload >= ?6 AND b.year_of_upload <= ?7" +
+                    " AND b.year_of_creation >= ?8 AND b.year_of_creation <= ?9" +
+                    " AND ub.user_id = ?10" +
+                    " ORDER BY b.name" +
+                    " LIMIT ?11 OFFSET ?12"
+            , nativeQuery = true
+    )
+    List<Book> getBookListByBookSearchRequestAndReaderId(String statusName, String username, String BookName,
+                                                       long minCost, long maxCost,
+                                                       short minYearOfUpload, short maxYearOfUpload,
+                                                       short minYearOfCreation, short maxYearOfCreation, long readerId,
+                                                       long limit, long offset
+    );
+
+    @Query(
+            value = "SELECT COUNT(*) FROM \"Book\" b" +
+                    " INNER JOIN \"User\" u on b.creator_id = u.id" +
+                    " INNER JOIN \"Book_status\" s on b.book_status_id = s.id" +
+                    " INNER JOIN \"User_Book\" ub on ub.book_id = b.id" +
+                    " WHERE s.name ILIKE ?1" +
+                    " AND u.username ILIKE ?2" +
+                    " AND b.name ILIKE ?3" +
+                    " AND b.cost >= ?4 AND b.cost <= ?5" +
+                    " AND b.year_of_upload >= ?6 AND b.year_of_upload <= ?7" +
+                    " AND b.year_of_creation >= ?8 AND b.year_of_creation <= ?9" +
+                    " AND ub.user_id = ?10"
+            , nativeQuery = true
+    )
+    Long countBookByBookSearchRequestAndReaderId(String statusName, String username, String BookName,
+                                                       long minCost, long maxCost,
+                                                       short minYearOfUpload, short maxYearOfUpload,
+                                                       short minYearOfCreation, short maxYearOfCreation, long readerId
+    );
 }

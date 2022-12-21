@@ -51,6 +51,16 @@
                                 </form></li>
                             </ul>
                         </li>
+                        <li class="nav-item dropdown" sec:authorize="hasAuthority('READER')">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Reader management
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                <li><form th:action="@{/reader/library/search}">
+                                    <button type="submit" class="dropdown-item">My library</button>
+                                </form></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
