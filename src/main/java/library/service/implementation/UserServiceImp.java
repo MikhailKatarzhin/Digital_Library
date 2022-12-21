@@ -1,6 +1,7 @@
 package library.service.implementation;
 
 import library.config.WebSecurityConfig;
+import library.model.Book;
 import library.model.RoleOfUser;
 import library.model.User;
 import library.model.Wallet;
@@ -109,6 +110,31 @@ public class UserServiceImp implements UserService {
         user =  userRepository.save(user);
         logger.info("User {}[id:{}] change email {} to {}", user.getUsername(), user.getId(), oldEmail, user.getEmail());
         return user;
+    }
+
+    @Override
+    public User addPurchasedBook(Book book) {
+        if (!purchaseBook(book))
+            return null;
+        User reader = getRemoteUser();
+        Set<Book> purchasedBook = reader.getPurchasedBooks();
+        purchasedBook.add(book);
+        reader.setPurchasedBooks(purchasedBook);
+        logger.info("User {}[id:{}] bought book[id:{}]", reader.getUsername(), reader.getId(), book.getId());
+        return userRepository.save(reader);
+    }
+
+    public boolean purchaseBook(Book book){
+        long cost = book.getCost();
+        User user = getRemoteUser();
+        Wallet wallet = user.getWallet();
+        long balance = wallet.getBalance();
+        if (cost > balance)
+            return false;
+        wallet.debitingFunds(cost);
+        user.setWallet(wallet);
+        userRepository.save(user);
+        return true;
     }
 
     @Override

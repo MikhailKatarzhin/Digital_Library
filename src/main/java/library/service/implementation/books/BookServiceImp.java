@@ -39,6 +39,8 @@ public class BookServiceImp implements BookService {
 
     @Override
     public Book getById(long id) {
+        if (bookRepository.countById(id) == 0)
+            return null;
         return bookRepository.getById(id);
     }
 

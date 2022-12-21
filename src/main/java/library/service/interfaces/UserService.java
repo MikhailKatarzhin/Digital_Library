@@ -1,5 +1,6 @@
 package library.service.interfaces;
 
+import library.model.Book;
 import library.model.RoleOfUser;
 import library.model.User;
 
@@ -25,6 +26,8 @@ public interface UserService {
     boolean emailExists(String email);
 
     User saveEmail(String email);
+
+    User addPurchasedBook(Book book);
 
     User savePassword(String password);
 

@@ -73,6 +73,20 @@
             <td th:text="${book.yearOfCreation}" style="border-bottom:1px solid black"></td>
             <td th:text="${book.yearOfUpload}" style="border-bottom:1px solid black"></td>
         </tr>
+        <tr th:if="${reader} != null">
+            <td colspan="2" th:if="${!reader.hasBook(__${bookId}__)}">
+                <form th:action="@{/reader/buy/__${bookId}__}" method="get">
+                    <input type="submit" value="Buy this book" class="w-100 btn btn-sm btn-dark">
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${reader} != null">
+            <td colspan="2" th:if="${reader.hasBook(__${bookId}__)}">
+                <form>
+                    <input type="submit" value="Start read book ##Not Implemented" class="w-100 btn btn-sm btn-primary">
+                </form>
+            </td>
+        </tr>
     </table>
     <table class="table table-striped table-sm table-responsive">
         <tr>

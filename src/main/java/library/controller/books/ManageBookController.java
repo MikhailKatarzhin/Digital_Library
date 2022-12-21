@@ -37,6 +37,7 @@ public class ManageBookController {
     public String managementById(@PathVariable Long bookId, ModelMap model) {
         Book book = bookService.getById(bookId);
         model.addAttribute("book", book);
+        model.addAttribute("reader", userService.getRemoteUser());
         List<BookStatus> bookStatusList = bookStatusService.getAll();
         model.addAttribute("statusList", bookStatusList);
         List<Chapter> chapters = chapterService.findByBookId(bookId);
